@@ -1,0 +1,511 @@
+{
+  "info": {
+    "name": "Crossly Buyer API",
+    "description": "The buyer-facing Crossly API — cart, orders, wishlists, offers, cashback. A DIFFERENT principal from the seller API: authenticated by a buyer OAuth token scoped `buyer:*` and resolved by `resolveBuyer`. A seller Personal Access Token will NOT authenticate these endpoints.\n\nSet `crossly_buyer_token` in the collection variables. Buyer OAuth token (crossly_oat_…) carrying buyer:* scopes. NOT a seller PAT.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{crossly_buyer_token}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://crossly.net/api",
+      "type": "string"
+    },
+    {
+      "key": "crossly_buyer_token",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "buyer",
+      "item": [
+        {
+          "name": "Your Crossly shopping profile — name, email, saved address, Bucks balance.",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/v1/buyer/profile",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "v1",
+                "buyer",
+                "profile"
+              ],
+              "query": []
+            },
+            "description": "Your Crossly shopping profile — name, email, saved address, Bucks balance.\n\noperationId: getBuyerProfile"
+          },
+          "response": []
+        },
+        {
+          "name": "What you have bought on Crossly, newest first.",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/v1/buyer/orders",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "v1",
+                "buyer",
+                "orders"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "",
+                  "description": "",
+                  "disabled": true
+                },
+                {
+                  "key": "limit",
+                  "value": "",
+                  "description": "",
+                  "disabled": true
+                }
+              ]
+            },
+            "description": "What you have bought on Crossly, newest first.\n\noperationId: listBuyerOrders"
+          },
+          "response": []
+        },
+        {
+          "name": "What is in your Crossly cart.",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/v1/buyer/cart",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "v1",
+                "buyer",
+                "cart"
+              ],
+              "query": []
+            },
+            "description": "Line items with the price captured when each was added. This is NOT a quote — shipping, tax and any discounts are computed at checkout against a delivery address, and the sum of these lines is not what you will be charged.\n\noperationId: listBuyerCart"
+          },
+          "response": []
+        },
+        {
+          "name": "Your Scout cashback — pending, confirmed, paid.",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/v1/buyer/cashback",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "v1",
+                "buyer",
+                "cashback"
+              ],
+              "query": [
+                {
+                  "key": "status",
+                  "value": "",
+                  "description": "",
+                  "disabled": true
+                },
+                {
+                  "key": "page",
+                  "value": "",
+                  "description": "",
+                  "disabled": true
+                },
+                {
+                  "key": "limit",
+                  "value": "",
+                  "description": "",
+                  "disabled": true
+                }
+              ]
+            },
+            "description": "Newest first. `pending` means an order was reported and the retailer's return window has not closed; nothing is paid until it does. `expired` means a click was never reported as converting, which is the ordinary outcome for most clicks.\n\noperationId: listBuyerCashback"
+          },
+          "response": []
+        },
+        {
+          "name": "Your wishlists.",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/v1/buyer/wishlists",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "v1",
+                "buyer",
+                "wishlists"
+              ],
+              "query": []
+            },
+            "description": "Your wishlists.\n\noperationId: listBuyerWishlists"
+          },
+          "response": []
+        },
+        {
+          "name": "Create a wishlist.",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/v1/buyer/wishlists",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "v1",
+                "buyer",
+                "wishlists"
+              ],
+              "query": []
+            },
+            "description": "Create a wishlist.\n\noperationId: createBuyerWishlist"
+          },
+          "response": []
+        },
+        {
+          "name": "What is on one wishlist.",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/v1/buyer/wishlists/{id}/items",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "v1",
+                "buyer",
+                "wishlists",
+                ":id",
+                "items"
+              ],
+              "query": []
+            },
+            "description": "What is on one wishlist.\n\noperationId: listBuyerWishlistItems"
+          },
+          "response": []
+        },
+        {
+          "name": "Add a listing to a wishlist.",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"listingSlug\": \"\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/v1/buyer/wishlists/{id}/items",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "v1",
+                "buyer",
+                "wishlists",
+                ":id",
+                "items"
+              ],
+              "query": []
+            },
+            "description": "Add a listing to a wishlist.\n\noperationId: createBuyerWishlistItem"
+          },
+          "response": []
+        },
+        {
+          "name": "Add a listing to your cart.",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"listingSlug\": \"\",\n  \"quantity\": 0\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/v1/buyer/cart/items",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "v1",
+                "buyer",
+                "cart",
+                "items"
+              ],
+              "query": []
+            },
+            "description": "Add a listing to your cart.\n\noperationId: createBuyerCartItem"
+          },
+          "response": []
+        },
+        {
+          "name": "Remove a line from your cart.",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/v1/buyer/cart/items/{id}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "v1",
+                "buyer",
+                "cart",
+                "items",
+                ":id"
+              ],
+              "query": []
+            },
+            "description": "Remove a line from your cart.\n\noperationId: deleteBuyerCartItem"
+          },
+          "response": []
+        },
+        {
+          "name": "Price the cart, delivered — item, shipping, tax, total.",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/v1/buyer/cart/quote",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "v1",
+                "buyer",
+                "cart",
+                "quote"
+              ],
+              "query": []
+            },
+            "description": "Runs the real checkout cascade and returns the totals instead of charging. Nothing is purchased. `taxComplete: false` means there is no saved delivery address, so the total is a floor rather than a final figure.\n\noperationId: createBuyerCartQuote"
+          },
+          "response": []
+        },
+        {
+          "name": "Offer a price on a listing.",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"listingSlug\": \"\",\n  \"amountCents\": 0,\n  \"message\": \"\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/v1/buyer/offers",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "v1",
+                "buyer",
+                "offers"
+              ],
+              "query": []
+            },
+            "description": "Sends an offer to the seller. Spends nothing — a seller accepting still leaves you to complete checkout. Offers at or above the asking price are refused; buy it instead.\n\noperationId: createBuyerOffer"
+          },
+          "response": []
+        },
+        {
+          "name": "Report an item your user is looking at, and get our answer.",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"namespace\": \"gtin\",\n  \"value\": \"\",\n  \"retailHost\": \"\",\n  \"pagePriceCents\": 0,\n  \"pageCurrency\": \"\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/v1/buyer/activity",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "v1",
+                "buyer",
+                "activity"
+              ],
+              "query": []
+            },
+            "description": "Records the look and returns whether Crossly has the item and at what price. Send an identifier and a store DOMAIN — a full URL is refused. Nothing about the page itself is stored.\n\noperationId: createBuyerActivity"
+          },
+          "response": []
+        },
+        {
+          "name": "What this buyer has compared lately.",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/v1/buyer/activity",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "v1",
+                "buyer",
+                "activity"
+              ],
+              "query": []
+            },
+            "description": "Newest first, and only as far back as the retention window — the link between a person and a comparison is dropped after 180 days, so this thins out rather than growing forever.\n\noperationId: getBuyerActivity"
+          },
+          "response": []
+        },
+        {
+          "name": "The shopping profile derived from that activity.",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/v1/buyer/preferences",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "v1",
+                "buyer",
+                "preferences"
+              ],
+              "query": []
+            },
+            "description": "Derived, never declared — there is no preferences form anywhere. `matchRate` is the share of this person's searches Crossly could answer; a low number is an inventory problem, not a personalisation one, which is why it is here.\n\noperationId: getBuyerPreference"
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
